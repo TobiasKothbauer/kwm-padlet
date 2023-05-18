@@ -29,11 +29,11 @@ class Padlet extends Model
     /**
      * @return BelongsTo
      * 1 padlet can only be created by 1 user
-    */
+
     public function user():BelongsTo {
         return $this->belongsTo(User::class);
     }
-
+     */
 
     public function users(): BelongsToMany {
         return $this->belongsToMany(User::class)->withPivot(['right']);

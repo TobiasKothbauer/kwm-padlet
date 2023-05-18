@@ -22,8 +22,10 @@ class PadletsTableSeeder extends Seeder
         $padlet1->name = "My first Padlet";
         $padlet1->public = true;
 
+        /* user id to padlet
         $user = User::first();
         $padlet1->user()->associate($user);
+        */
         $padlet1->save();
 
         // add entries to padlet
@@ -56,7 +58,7 @@ class PadletsTableSeeder extends Seeder
         $rating2 = new Rating();
         $rating2->rating = 1;
 
-        $entry1->comments()->saveMany([$comment1, $comment2]);
+        $entry1->ratings()->saveMany([$rating1, $rating2]);
 
     }
 }

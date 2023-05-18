@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('public');
             $table->timestamp('creation_date')->default(\Carbon\Carbon::now());
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            //$table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
