@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
 
 
-    public function padlets(): BelongsToMany {
+    public function users(): BelongsToMany {
         return $this->belongsToMany(Padlet::class)->withPivot(['right']);
     }
 }

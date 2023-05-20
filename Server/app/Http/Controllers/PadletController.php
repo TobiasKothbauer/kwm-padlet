@@ -30,48 +30,65 @@ class PadletController extends Controller
 
     public function index(): JsonResponse
     {
-        //$padlets = Padlet::with(['users', 'user'])->get();
-        $padlets = Padlet::with(['users'])->get();
-
-        // Get the IDs of all the padlets
-        $padletIds = $padlets->pluck('id');
-
-        // Load the entries with their comments and ratings
-        $entries = Entry::with(['comments', 'ratings'])->whereIn('padlet_id', $padletIds)->get();
-
-        // Group the entries by padlet ID
-        $groupedEntries = $entries->groupBy('padlet_id');
-
-        // Assign the entries to the corresponding padlet
-        $padlets->each(function ($padlet) use ($groupedEntries) {
-            $padlet->entries = $groupedEntries->get($padlet->id);
-        });
-
-        // Return the modified padlets as the response
-        return response()->json(['padlets' => $padlets], 200);
+        $padlets = Padlet::with(['user'])->get();
+        return \response()->json($padlets, 200);
     }
 
-    public function findById($id): JsonResponse
-    {
-        // Padlet mit der entsprechenden ID und den zugehörigen Beziehungen (users, user) abrufen
-        //$padlet = Padlet::with(['users', 'user'])->find($id);
-        $padlet = Padlet::with(['users'])->find($id);
+    /*
+        public function index(): JsonResponse
+        {
+            //$padlets = Padlet::with(['users', 'user'])->get();
+            $padlets = Padlet::with(['users'])->get();
 
-        // Überprüfen, ob das Padlet existiert
-        if (!$padlet) {
-            // Fehlermeldung zurückgeben, falls das Padlet nicht gefunden wurde
-            return response()->json(['message' => 'Padlet not found'], 404);
+            // Get the IDs of all the padlets
+            $padletIds = $padlets->pluck('id');
+
+            // Load the entries with their comments and ratings
+            $entries = Entry::with(['comments', 'ratings'])->whereIn('padlet_id', $padletIds)->get();
+
+            // Group the entries by padlet ID
+            $groupedEntries = $entries->groupBy('padlet_id');
+
+            // Assign the entries to the corresponding padlet
+            $padlets->each(function ($padlet) use ($groupedEntries) {
+                $padlet->entries = $groupedEntries->get($padlet->id);
+            });
+
+            // Return the modified padlets as the response
+            return response()->json(['padlets' => $padlets], 200);
+        }
+    */
+
+        public function findById($id): JsonResponse
+        {
+            $padlet = Padlet::with(['user'])->where('id', $id)->first();
+
+            return response()->json($padlet, 200);
         }
 
-        // Entries mit ihren Kommentaren und Bewertungen für die angegebene padlet_id laden
-        $entries = Entry::with(['comments', 'ratings'])->where('padlet_id', $id)->get();
+        /*
+        public function findById($id): JsonResponse
+        {
+            // Padlet mit der entsprechenden ID und den zugehörigen Beziehungen (users, user) abrufen
+            //$padlet = Padlet::with(['users', 'user'])->find($id);
+            $padlet = Padlet::with(['users', 'user'])->find($id);
 
-        // Die geladenen Entries dem Padlet zuweisen
-        $padlet->entries = $entries;
+            // Überprüfen, ob das Padlet existiert
+            if (!$padlet) {
+                // Fehlermeldung zurückgeben, falls das Padlet nicht gefunden wurde
+                return response()->json(['message' => 'Padlet not found'], 404);
+            }
 
-        // JSON-Response zurückgeben, das das Padlet mit den dazugehörigen Entries enthält
-        return response()->json(['padlet' => $padlet], 200);
-    }
+            // Entries mit ihren Kommentaren und Bewertungen für die angegebene padlet_id laden
+            $entries = Entry::with(['comments', 'ratings'])->where('padlet_id', $id)->get();
+
+            // Die geladenen Entries dem Padlet zuweisen
+            $padlet->entries = $entries;
+
+            // JSON-Response zurückgeben, das das Padlet mit den dazugehörigen Entries enthält
+            return response()->json(['padlet' => $padlet], 200);
+        }
+    */
 
     /**
      * create new Padlet
@@ -86,7 +103,7 @@ class PadletController extends Controller
         try {
             $padlet = Padlet::create($request->all());
 
-            /* save entries */
+            /* save entries
             if (isset($request['entries']) && is_array($request['entries'])) {
                 foreach ($request['entries'] as $entry) {
                     $result =
@@ -94,6 +111,7 @@ class PadletController extends Controller
                     $padlet->entries()->save($result);
                 }
             }
+*/
 
             DB::commit();
             // return a vaild http response
@@ -119,7 +137,16 @@ class PadletController extends Controller
                 $request = $this->parseRequest($request);
                 $padlet->update($request->all());
 
+                /*update users
+                $ids = [];
+                if (isset($request['users']) && is_array($request['users'])) {
+                    foreach ($request['users'] as $user) {
+                        array_push($ids,$user['id']);
+                    }
+                }
+                $padlet->users()->sync($ids);
                 $padlet->save();
+                */
 
                 DB::commit();
                 $padlet = Padlet::with(['entries', 'users'])

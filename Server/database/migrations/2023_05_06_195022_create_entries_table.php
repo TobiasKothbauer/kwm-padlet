@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
+            $table->text('title');
             $table->text('text');
             $table->foreignId('padlet_id')->constrained()->onDelete('cascade');
             $table->timestamps();

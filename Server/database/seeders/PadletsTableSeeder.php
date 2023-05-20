@@ -6,8 +6,8 @@ use App\Models\Comment;
 use App\Models\Entry;
 use App\Models\Rating;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use \App\Models\Padlet;
 
 class PadletsTableSeeder extends Seeder
 {
@@ -18,28 +18,44 @@ class PadletsTableSeeder extends Seeder
      */
     public function run()
     {
-        $padlet1 = new \App\Models\Padlet();
+        $padlet1 = new Padlet();
         $padlet1->name = "My first Padlet";
-        $padlet1->public = true;
+        $padlet1->isPublic = true;
 
-        /* user id to padlet
+        $padlet2 = new Padlet();
+        $padlet2->name = "second Padlet";
+        $padlet2->isPublic = false;
+
+        /* user id to padlet */
         $user = User::first();
+        $user2 = User::find(2);
         $padlet1->user()->associate($user);
-        */
+        $padlet2->user()->associate($user2);
+
         $padlet1->save();
+        $padlet2->save();
 
         // add entries to padlet
         $entry1 = new Entry();
+        $entry1->title = "title1";
         $entry1->text = "entry text";
 
         $entry2 = new Entry();
+        $entry2->title = "title2";
         $entry2->text = "entry text 2";
 
+        $entry3 = new Entry();
+        $entry3->title = "Eintrag für 2tes Padlet";
+        $entry3->text = "das 2te padlet ist viel cooler als das 1te";
+
         $padlet1->entries()->saveMany([$entry1, $entry2]);
+        $padlet2->entries()->saveMany([$entry3]);
 
         // add all users
         $users = User::all()->pluck("id");
         $padlet1->users()->sync($users);
+        $padlet2->users()->sync($users);
+
 
         // add comments to entry
         $comment1 = new Comment();

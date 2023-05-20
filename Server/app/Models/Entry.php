@@ -12,7 +12,9 @@ class Entry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'text'
+        'title',
+        'text',
+        'padlet_id'
     ];
 
     /**

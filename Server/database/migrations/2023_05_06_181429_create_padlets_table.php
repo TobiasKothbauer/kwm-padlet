@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('padlets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('public');
+            $table->boolean('isPublic');
             $table->timestamp('creation_date')->default(\Carbon\Carbon::now());
-            //$table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,0 +1,41 @@
+<div class="ui grid" *ngIf="padlet">
+  <div class="twelve wide column">
+    <h1 class="ui header">{{ padlet.name }}</h1>
+    <div class="ui divider"></div>
+    <div class="ui grid">
+      <div class="four wide column">
+        <h4 class="ui header">Entries</h4>
+        <span *ngFor="let entry of entries; last as l">Titel: {{ entry.title }}, Text: {{ entry.text }}
+          <span *ngIf="!l"> | </span>
+        </span>
+        <span *ngIf="entries">
+          <span *ngFor="let entry of entries">
+            <span *ngIf="entry.comments">
+              <p *ngFor="let comment of entry.comments; last as l">Kommentar: {{ comment.comment }}</p>
+            </span>
+          </span>
+        </span>
+      </div>
+      <div class="four wide column">
+        <h4 class="ui header">ID</h4>
+        {{ padlet.id }}
+      </div>
+      <div class="four wide column">
+        <h4 class="ui header">Erstellt</h4>
+        {{ padlet.creation_date }}
+      </div>
+      <div class="four wide column">
+        <h4 class="ui header">Öffentlich?</h4>
+        <span *ngIf="padlet.isPublic==true">Ja</span>
+        <span *ngIf="padlet.isPublic==false">Nein</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button routerLink="/padlets" class="ui red button">Zurück zur Padletliste</button>
+<button class="ui tiny red labeled icon button"
+        (click)="removePadlet()">
+  <i class="remove icon"></i> Padlet löschen
+</button>
+
