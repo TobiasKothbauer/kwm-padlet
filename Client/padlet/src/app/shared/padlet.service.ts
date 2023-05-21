@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Entry, Padlet} from "./padlet";
+import {Comment} from "./comment";
 import {PadletListComponent} from "../padlet-list/padlet-list.component";
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, retry, throwError} from "rxjs";
+import {PadletFormErrorMessages} from "../padlet-form/padlet-form-error-messages";
+import {Rating} from "./rating";
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +59,40 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  removeEntry(id:number) : Observable<any> {
+    return this.http.delete(`${this.api}/entries/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  createPadlet(padlet:Padlet) : Observable<any>  {
+    return this.http.post(`${this.api}/padlets`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  createEntry(padletId:number, entry:Entry) {
+    return this.http.post(`${this.api}/padlets/${padletId}/entries`, entry)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  createComment(entryId:number, comment:Comment) : Observable<any> {
+    return this.http.post(`${this.api}/entries/${entryId}/comments`, comment)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  createRating(entryId:number, rating:Rating) : Observable<any> {
+    return this.http.post(`${this.api}/entries/${entryId}/ratings`, rating)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  updatePadlet(padlet:Padlet) : Observable<any>  {
+    return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
 
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }
+
 
 }

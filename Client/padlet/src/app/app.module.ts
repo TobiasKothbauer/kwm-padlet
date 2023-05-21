@@ -13,6 +13,11 @@ import { EntryComponent } from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { PadletFormComponent } from './padlet-form/padlet-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { EntryFormComponent } from './entry-form/entry-form.component';
+import { CommmentFormComponent } from './commment-form/commment-form.component';
+import { Location } from '@angular/common';
+import { RatingFormComponent } from './rating-form/rating-form.component';
 
 @NgModule({
   declarations: [
@@ -22,16 +27,23 @@ import { PadletFormComponent } from './padlet-form/padlet-form.component';
     PadletDetailsComponent,
     HomeComponent,
     EntryComponent,
-    PadletFormComponent
+    PadletFormComponent,
+    EntryFormComponent,
+    CommmentFormComponent,
+    RatingFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule
   ],
-  providers: [PadletService],
+  providers: [
+    PadletService,
+    Location
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

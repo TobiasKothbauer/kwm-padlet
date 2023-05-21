@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entry;
 use App\Models\Padlet;
+use App\Models\Comment;
+use App\Models\Rating;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,21 @@ class EntryController extends Controller
         return response()->json($entries, 200);
     }
 
+    public function getComments($id): JsonResponse
+    {
+        $entry = Entry::with(['comments'])->where('id', $id)->first();
+        $comments = $entry->comments;
+        return response()->json($comments, 200);
+    }
+
+    public function getRatings($id): JsonResponse
+    {
+        $entry = Entry::with(['ratings'])->where('id', $id)->first();
+        $ratings = $entry->ratings;
+        return response()->json($ratings, 200);
+    }
+
+
     /**
      * create new entry
      */
@@ -34,6 +51,34 @@ class EntryController extends Controller
         catch (\Exception $e) {
             DB::rollBack();
             return response()->json("saving entry failed: " . $e->getMessage(), 420);
+        }
+    }
+
+    public function saveComment(Request $request) : JsonResponse {
+        DB::beginTransaction();
+        try {
+            $comment = Comment::create($request->all());
+
+            DB::commit();
+            return response()->json($comment, 201);
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json("saving comment failed: " . $e->getMessage(), 420);
+        }
+    }
+
+    public function saveRating(Request $request) : JsonResponse {
+        DB::beginTransaction();
+        try {
+            $rating = Rating::create($request->all());
+
+            DB::commit();
+            return response()->json($rating, 201);
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json("saving rating failed: " . $e->getMessage(), 420);
         }
     }
 

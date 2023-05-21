@@ -23,13 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("padlets", [PadletController::class, 'index']);
 Route::get("padlets/{id}",[PadletController::class, 'findById']);
 Route::get("padlets/{id}/entries",[EntryController::class, 'getEntries']);
+Route::get("entries/{id}/comments",[EntryController::class, 'getComments']);
+Route::get("entries/{id}/ratings",[EntryController::class, 'getRatings']);
 
 Route::post('padlets', [PadletController::class,'save']);
 Route::post('padlets/{id}/entries', [EntryController::class,'saveEntry']);
-
+Route::post("entries/{id}/comments",[EntryController::class, 'saveComment']);
+Route::post("entries/{id}/ratings",[EntryController::class, 'saveRating']);
 
 Route::put('padlets/{id}', [PadletController::class,'update']);
-
 
 Route::delete('padlets/{id}', [PadletController::class,'delete']);
 Route::delete('entries/{id}', [EntryController::class,'deleteEntry']);

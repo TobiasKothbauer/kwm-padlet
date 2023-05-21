@@ -4,15 +4,22 @@ import {HomeComponent} from "./home/home.component";
 import {PadletListComponent} from "./padlet-list/padlet-list.component";
 import {PadletDetailsComponent} from "./padlet-details/padlet-details.component";
 import {EntryComponent} from "./entry/entry.component";
+import {PadletFormComponent} from "./padlet-form/padlet-form.component";
+import {EntryFormComponent} from "./entry-form/entry-form.component";
+import {CommmentFormComponent} from "./commment-form/commment-form.component";
+import {RatingFormComponent} from "./rating-form/rating-form.component";
 
 const routes: Routes = [
-  // pathMatch: 'full' -> es muss tatsächlich die ganze slug matchen und es darf nichts danach kommen
-  {path: '', redirectTo : 'home', pathMatch: 'full'},
-  {path: 'home', component : HomeComponent},
-  {path: 'padlets', component : PadletListComponent},
-  {path: 'padlets/:id', component : PadletDetailsComponent},
-  {path: 'padlets/:id/entries', component : EntryComponent},
-
+  // pathMatch: 'full' -> it must match the entire slug, and nothing should come after it
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'padlets', component: PadletListComponent },
+  { path: 'padlets/:id', component: PadletDetailsComponent },
+  { path: 'admin', component: PadletFormComponent },
+  { path: 'admin/:id', component: PadletFormComponent },
+  { path: 'admin/padlets/:padletId/entries', component: EntryFormComponent },
+  { path: 'admin/padlets/:padletId/entries/:entryId/comment', component: CommmentFormComponent },
+  { path: 'admin/padlets/:padletId/entries/:entryId/rating', component: RatingFormComponent }
 ];
 
 @NgModule({

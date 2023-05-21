@@ -15,7 +15,8 @@ class Padlet extends Model
     // fillable -> what am i allowed to set. guarded -> what i am not allowed to set.
     protected $fillable = [
         'name',
-        'isPublic'
+        'isPublic',
+        'user_id'
     ];
 
     /**

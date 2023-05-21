@@ -11,7 +11,8 @@ class Rating extends Model
     use HasFactory;
 
     protected $fillable = [
-        'comment'
+        'rating',
+        'entry_id'
     ];
 
     /**

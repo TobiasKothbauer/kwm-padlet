@@ -1,0 +1,18 @@
+<h1>Gebe deine Bewertung ab!</h1>
+<form class="ui large form" [formGroup]="ratingForm"
+      (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>Dein Rating:</label>
+    <div class="rating-counter">
+      <button type="button" (click)="decreaseRating()">-</button>
+      <input type="number" formControlName="rating">
+      <button type="button" (click)="increaseRating()">+</button>
+    </div>
+    <div *ngIf="errors['rating']" class="ui negative message">{{errors['rating']}}</div>
+  </div>
+
+
+  <button type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
+</form>
+

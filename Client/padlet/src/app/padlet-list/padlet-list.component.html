@@ -1,6 +1,17 @@
 <div class="ui middle aligned selection divided list">
-  <a *ngFor="let padlet of padlets" class="item bs-padlet-list-item"
-     [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+  <!-- Public Padlets Section -->
+  <h1 class="ui header">Public</h1>
+  <ng-container *ngFor="let padlet of padlets">
+    <div *ngIf="padlet.isPublic" class="item">
+      <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+    </div>
+  </ng-container>
+
+  <!-- Not Public Padlets Section -->
+  <h1 class="ui header">Not Public</h1>
+  <ng-container *ngFor="let padlet of padlets">
+    <div *ngIf="!padlet.isPublic" class="item">
+      <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+    </div>
+  </ng-container>
 </div>
-
-
