@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFactory} from "../shared/padlet-factory";
 import {ToastrService} from "ngx-toastr";
 import { Location } from '@angular/common';
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -22,7 +23,8 @@ export class PadletDetailsComponent implements OnInit{
     private route:ActivatedRoute,
     private router:Router,
     private toastr: ToastrService,
-    private location: Location
+    private location: Location,
+    public authService: AuthenticationService
   ) {
   }
 
@@ -39,11 +41,6 @@ export class PadletDetailsComponent implements OnInit{
     this.ps.getAllEntries(params['id']).subscribe(
       (ent:Entry[]) => this.entries=ent
     );
-
-  }
-
-  addEntry() {
-
   }
 
   removePadlet(){

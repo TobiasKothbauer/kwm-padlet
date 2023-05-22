@@ -1,14 +1,15 @@
-<h1>Kommentar erstellen</h1>
-<form class="ui large form" [formGroup]="commentForm"
-      (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
-  <div class="field">
-    <label>Dein Kommentar:</label>
-    <input formControlName="comment">
-    <div *ngIf="errors['comment']" class="ui negative message">{{errors['comment']}}</div>
-  </div>
+<div class="ui container">
+  <h1>Kommentar erstellen</h1>
+  <form class="ui large form" [formGroup]="commentForm"
+        (ngSubmit)="submitForm()">
+    <input type="hidden" formControlName="id">
+    <div class="field">
+      <label>Dein Kommentar:</label>
+      <input formControlName="comment">
+      <div *ngIf="errors['comment']" class="ui negative message">{{errors['comment']}}</div>
+    </div>
 
 
-  <button type="submit" class="ui button" [disabled]="commentForm.invalid">Speichern</button>
-</form>
-
+    <button type="submit" class="ui button" [disabled]="commentForm.invalid">Speichern</button>
+  </form>
+</div>

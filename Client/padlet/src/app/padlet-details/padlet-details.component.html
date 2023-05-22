@@ -1,83 +1,92 @@
-<div class="ui grid" *ngIf="padlet">
-  <div class="twelve wide column">
-    <h1 class="ui header">{{ padlet.name }}</h1>
-    <a class="ui tiny yellow labeled icon button"
-       [routerLink]="['../../admin', padlet.id]">
-      <i class="write icon"></i> Padlet bearbeiten
-    </a>
-    <button class="ui tiny red labeled icon button" (click)="removePadlet()">
-      <i class="remove icon"></i> Padlet löschen
-    </button>
-    <div class="ui divider"></div>
+<div class="ui container">
+  <div class="ui " *ngIf="padlet">
+    <div>
 
-    <div class="ui raised segment">
-      <div class="ui grid">
-        <div class="twelve wide column">
-          <h4 class="ui header">Entries</h4>
-          <a class="ui tiny yellow labeled icon button"
-             [routerLink]="['../../admin/padlets', padlet.id, 'entries']">
-            <i class="write icon"></i> Eintrag hinzufügen
-          </a>
-          <div class="ui divider"></div>
-          <div class="ui stackable four column grid">
-            <div class="column" *ngFor="let entry of entries">
-              <div class="ui segment">
-                <h3 class="ui header">{{ entry.title }}</h3>
-                <div class="meta">{{ entry.text }}</div>
-                <div class="extra">
-                  <div class="ui horizontal list">
-                    <div class="item" *ngIf="entry.comments">
-                      <h4 class="ui header">Kommentare</h4>
-                      <p *ngFor="let comment of entry.comments">{{ comment.comment }}</p>
-                      <a class="ui tiny green labeled icon button"
-                         [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'comment']">
-                        <i class="plus icon"></i> Kommentieren
-                      </a>
-                    </div>
-                    <div class="item left aligned" *ngIf="entry.ratings">
-                      <h4 class="ui header">Bewertungen</h4>
-                      <p *ngFor="let rating of entry.ratings">{{ rating.rating }}</p>
-                      <a class="ui tiny green labeled icon button"
-                         [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'rating']">
-                        <i class="plus icon"></i> Bewerten
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="extra">
-                  <a class="ui tiny red labeled icon button" (click)="removeEntry(entry.id)">
-                    <i class="remove icon"></i> Eintrag löschen
-                  </a>
-                </div>
+      <div class="ui basic segment">
+        <!-- Content goes here -->
+      </div>
+
+      <div class="ui raised segment">
+
+        <h1 class="ui header">{{ padlet.name }}</h1>
+        <a class="ui tiny labeled icon button" [routerLink]="['../../admin', padlet.id]">
+          <i class="edit icon"></i> Bearbeiten
+        </a>
+        <a class="ui tiny labeled icon button" (click)="removePadlet()">
+          <i class="delete icon"></i> Löschen
+        </a>
+
+        <div class="ui divider"></div>
+
+        <div class="ui cards" *ngIf="entries">
+          <div class="card" *ngFor="let entry of entries">
+            <div class="content">
+              <div class="header">{{ entry.title }}</div>
+              <div class="description">{{ entry.text }}</div>
+            </div>
+
+            <div class="content" *ngFor="let comment of entry.comments">
+              <div class="center aligned description" >
+                <p>{{ comment.comment }} - from user</p>
               </div>
             </div>
+            <a *ngIf="authService.isLoggedIn()" class="ui bottom attached button"
+               [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'comment']">
+              <i class="add icon"></i>
+              Kommentieren
+            </a>
+
+
+            <div class="content" *ngFor="let rating of entry.ratings">
+              <div class="center aligned description" >
+                <p>{{ rating.rating }} - from user</p>
+              </div>
+            </div>
+            <a *ngIf="authService.isLoggedIn()" class="ui bottom attached button"
+               [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'rating']">
+              <i class="add icon"></i> Bewerten
+            </a>
+
           </div>
         </div>
+
+
+
+        <div class="ui divider"></div>
+
+        <a class="ui tiny labeled icon button green" [routerLink]="['../../admin/padlets', padlet.id, 'entries']">
+          <i class="plus icon"></i> Eintrag hinzufügen
+        </a>
       </div>
+
+      <!--
+      <div class="ui divider"></div>
+
+      <div class="ui grid">
+        <h4 class="ui header">Sonstige Attribute</h4>
+        <div class="four wide column">
+          <h4 class="ui header">ID</h4>
+          {{ padlet.id }}
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">Erstellt</h4>
+          {{ padlet.creation_date | date: 'medium' }}
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">Öffentlich?</h4>
+          <span *ngIf="padlet.isPublic==true">Ja</span>
+          <span *ngIf="padlet.isPublic==false">Nein</span>
+        </div>
+      </div>
+      -->
     </div>
-
-    <div class="ui divider"></div>
-
-    <div class="ui grid">
-      <h4 class="ui header">Sonstige Attribute</h4>
-      <div class="four wide column">
-        <h4 class="ui header">ID</h4>
-        {{ padlet.id }}
-      </div>
-      <div class="four wide column">
-        <h4 class="ui header">Erstellt</h4>
-        {{ padlet.creation_date }}
-      </div>
-      <div class="four wide column">
-        <h4 class="ui header">Öffentlich?</h4>
-        <span *ngIf="padlet.isPublic==true">Ja</span>
-        <span *ngIf="padlet.isPublic==false">Nein</span>
-      </div>
-    </div>
-
   </div>
+
+  <div class="ui basic segment"></div>
+  <a routerLink="/padlets" class="ui tiny labeled icon button">
+    <i class="left arrow icon"></i> Zurück zur Padletliste
+  </a>
+  <div class="ui basic segment"></div>
+
+
 </div>
-
-<button routerLink="/padlets" class="ui red button">Zurück zur Padletliste</button>
-
-

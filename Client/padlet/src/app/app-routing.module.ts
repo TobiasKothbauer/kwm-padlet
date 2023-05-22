@@ -8,6 +8,8 @@ import {PadletFormComponent} from "./padlet-form/padlet-form.component";
 import {EntryFormComponent} from "./entry-form/entry-form.component";
 import {CommmentFormComponent} from "./commment-form/commment-form.component";
 import {RatingFormComponent} from "./rating-form/rating-form.component";
+import {LoginComponent} from "./login/login.component";
+import {CanCommentAndRateGuard} from "./can-comment-and-rate.guard";
 
 const routes: Routes = [
   // pathMatch: 'full' -> it must match the entire slug, and nothing should come after it
@@ -18,12 +20,15 @@ const routes: Routes = [
   { path: 'admin', component: PadletFormComponent },
   { path: 'admin/:id', component: PadletFormComponent },
   { path: 'admin/padlets/:padletId/entries', component: EntryFormComponent },
-  { path: 'admin/padlets/:padletId/entries/:entryId/comment', component: CommmentFormComponent },
-  { path: 'admin/padlets/:padletId/entries/:entryId/rating', component: RatingFormComponent }
+  { path: 'admin/padlets/:padletId/entries/:entryId/comment', component: CommmentFormComponent, canActivate:[CanCommentAndRateGuard] },
+  { path: 'admin/padlets/:padletId/entries/:entryId/rating', component: RatingFormComponent, canActivate:[CanCommentAndRateGuard] },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CanCommentAndRateGuard]
 })
+
 export class AppRoutingModule { }

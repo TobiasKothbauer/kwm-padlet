@@ -8,7 +8,7 @@ import { PadletDetailsComponent } from './padlet-details/padlet-details.componen
 import {PadletService} from "./shared/padlet.service";
 import { HomeComponent } from './home/home.component';
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { EntryComponent } from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
@@ -18,6 +18,15 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
 import { CommmentFormComponent } from './commment-form/commment-form.component';
 import { Location } from '@angular/common';
 import { RatingFormComponent } from './rating-form/rating-form.component';
+import { LoginComponent } from './login/login.component';
+import {AuthenticationService} from "./shared/authentication.service";
+import {TokenInterceptorService} from "./shared/token-interceptor.service";
+import {LoginInterceptorService} from "./shared/login-interceptor.service";
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import { LOCALE_ID } from '@angular/core';
+
+registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [
@@ -30,7 +39,8 @@ import { RatingFormComponent } from './rating-form/rating-form.component';
     PadletFormComponent,
     EntryFormComponent,
     CommmentFormComponent,
-    RatingFormComponent
+    RatingFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -42,8 +52,25 @@ import { RatingFormComponent } from './rating-form/rating-form.component';
   ],
   providers: [
     PadletService,
-    Location
+    AuthenticationService,
+    Location,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginInterceptorService,
+      multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'de'
+    }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

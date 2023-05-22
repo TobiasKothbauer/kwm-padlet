@@ -1,38 +1,39 @@
-<h1>Padlet Formular</h1>
-<form class="ui large form" [formGroup]="padletForm"
-      (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
-  <div class="field">
-    <label>Padletname</label>
-    <input formControlName="name">
-    <div *ngIf="errors['name']" class="ui negative message">{{errors['name']}}</div>
-  </div>
-  <div class="field">
-    <label>Öffentlich</label>
-    <input type="radio" formControlName="isPublic" value="true" [checked]="padlet.isPublic == true"> Ja
-    <input type="radio" formControlName="isPublic" value="false" [checked]="padlet.isPublic == false"> Nein
-    <div *ngIf="errors['isPublic']" class="ui negative message">{{errors['isPublic']}}</div>
-  </div>
+<div class="ui container">
+  <form class="ui large form" [formGroup]="padletForm"
+        (ngSubmit)="submitForm()">
+    <input type="hidden" formControlName="id">
+    <div class="field">
+      <label>Padletname</label>
+      <input formControlName="name">
+      <div *ngIf="errors['name']" class="ui negative message">{{errors['name']}}</div>
+    </div>
+    <div *ngIf="authService.isLoggedIn()" class="field">
+      <label>Öffentlich</label>
+      <input type="radio" formControlName="isPublic" value="true" [checked]="padlet.isPublic == true"> Ja
+      <input type="radio" formControlName="isPublic" value="false" [checked]="padlet.isPublic == false"> Nein
+      <div *ngIf="errors['isPublic']" class="ui negative message">{{errors['isPublic']}}</div>
+    </div>
 
-  <div class="field">
-    <label>Einträge</label>
-    <div formArrayName="entries">
-      <div class="fields" *ngFor="let control of entries?.controls; index as i; last as l" [formGroupName]="i">
-        <input type="hidden" formControlName="id">
-        <div class="nine wide field">
-          <input formControlName="title" >
-        </div>
-        <div class="six wide field">
-          <input formControlName="text">
-        </div>
-        <div class="one wide field" *ngIf="l">
-          <button (click)="addThumbnailControl()" class="ui large button">+</button>
+    <div class="field">
+
+      <div formArrayName="entries">
+        <div class="fields" *ngFor="let control of entries?.controls; index as i; last as l" [formGroupName]="i">
+          <input type="hidden" formControlName="id">
+          <div class="nine wide field">
+            <input formControlName="title" >
+          </div>
+          <div class="six wide field">
+            <input formControlName="text">
+          </div>
+          <div class="one wide field" *ngIf="l">
+            <button (click)="addThumbnailControl()" class="ui large button">+</button>
+          </div>
         </div>
       </div>
+      <div class="ui negative message" *ngIf="errors['images']">{{errors['images']}}</div>
     </div>
-    <div class="ui negative message" *ngIf="errors['images']">{{errors['images']}}</div>
-  </div>
 
 
-  <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
-</form>
+    <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
+  </form>
+</div>

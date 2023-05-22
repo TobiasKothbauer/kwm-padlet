@@ -1,17 +1,99 @@
-<div class="ui middle aligned selection divided list">
-  <!-- Public Padlets Section -->
-  <h1 class="ui header">Public</h1>
-  <ng-container *ngFor="let padlet of padlets">
-    <div *ngIf="padlet.isPublic" class="item">
-      <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
-    </div>
-  </ng-container>
+<!--
+<div class="ui container">
+  <div class="ui middle aligned selection divided list">
 
-  <!-- Not Public Padlets Section -->
-  <h1 class="ui header">Not Public</h1>
-  <ng-container *ngFor="let padlet of padlets">
-    <div *ngIf="!padlet.isPublic" class="item">
-      <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
-    </div>
-  </ng-container>
+    <h1 class="ui header margin-top">Öffentliche Padlets</h1>
+    <ng-container *ngFor="let padlet of padlets">
+      <div *ngIf="padlet.isPublic" class="item">
+        <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <h1 class="ui header">Private Padlets</h1>
+      <ng-container *ngFor="let padlet of padlets">
+        <div *ngIf="!padlet.isPublic" class="item">
+          <a class="content bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
 </div>
+-->
+
+<div class="ui container">
+  <h1 class="ui header">Öffentliche Padlets</h1>
+  <div class="ui cards">
+    <ng-container *ngFor="let padlet of padlets">
+      <div *ngIf="padlet.isPublic" class="card">
+        <div class="content">
+          <a class="header bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+        </div>
+        <div class="extra content">
+        <span class="right floated">
+          {{ padlet.creation_date | date: 'short' }}
+        </span>
+            <span>
+          <i class="user icon"></i>
+          username
+        </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+
+  <span *ngIf="authService.isLoggedIn()" >
+
+    <div class="ui divider"></div>
+
+    <h1 class="ui header margin-top">Private Padlets</h1>
+    <div class="ui cards">
+      <ng-container *ngFor="let padlet of padlets">
+        <div *ngIf="!padlet.isPublic" class="card">
+          <div class="content">
+            <a class="header bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+          </div>
+          <div class="extra content">
+            <span class="right floated">
+              {{ padlet.creation_date | date: 'short' }}
+            </span>
+            <span>
+              <i class="user icon"></i>
+              username
+            </span>s
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="ui divider"></div>
+
+    <h1 class="ui header margin-top">Eigene erstellte Padlets</h1>
+    <div class="ui cards">
+      <ng-container *ngFor="let padlet of padlets">
+        <div *ngIf="padlet.user_id == authService.getCurrentUserId()" class="card">
+          <div class="content">
+            <a class="header bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+          </div>
+          <div class="extra content">
+            <span class="right floated">
+              {{ padlet.creation_date | date: 'short' }}
+            </span>
+            <span>
+              <i class="user icon"></i>
+              username
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </span>
+
+
+
+</div>
+

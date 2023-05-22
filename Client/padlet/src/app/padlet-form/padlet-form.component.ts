@@ -5,6 +5,7 @@ import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
 import {Padlet} from "../shared/padlet";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -23,7 +24,8 @@ export class PadletFormComponent implements OnInit{
     private fb: FormBuilder,
     private ps: PadletService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthenticationService
   ) {
     this.padletForm = this.fb.group({});
     this.entries = this.fb.array([]);
@@ -73,7 +75,6 @@ export class PadletFormComponent implements OnInit{
   submitForm() {
     const formValue = this.padletForm.value;
     const isPublic = formValue.isPublic === 'true';
-    console.log(this.padletForm.value);
 
     const padlet: Padlet = {
       ...formValue,
@@ -87,7 +88,14 @@ export class PadletFormComponent implements OnInit{
       });
     } else {
       // neu anlegen
-      padlet.user_id = 1;
+      const userIdString = sessionStorage.getItem("userId");
+      padlet.user_id = userIdString !== null ? parseInt(userIdString) : 0;
+
+      if (this.authService.isLoggedOut()) {
+        padlet.isPublic = false;
+        padlet.user_id = 3;
+      }
+
       this.ps.createPadlet(padlet).subscribe(res => {
         this.padlet = PadletFactory.empty();
         this.padletForm.reset(PadletFactory.empty());

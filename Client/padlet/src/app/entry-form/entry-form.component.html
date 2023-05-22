@@ -1,19 +1,20 @@
-<h1>Erstelle einen Eintrag!</h1>
-<form class="ui large form" [formGroup]="entryForm"
-      (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
-  <div class="field">
-    <label>Titel deines Eintrages:</label>
-    <input formControlName="title">
-    <div *ngIf="errors['title']" class="ui negative message">{{errors['title']}}</div>
-  </div>
-  <div class="field">
-    <label>Über was willst du schreiben?</label>
-    <input formControlName="text">
-    <div *ngIf="errors['text']" class="ui negative message">{{errors['text']}}</div>
-  </div>
+<div class="ui container">
+  <h1>Erstelle einen Eintrag!</h1>
+  <form class="ui large form" [formGroup]="entryForm"
+        (ngSubmit)="submitForm()">
+    <input type="hidden" formControlName="id">
+    <div class="field">
+      <label>Titel deines Eintrages:</label>
+      <input formControlName="title">
+      <div *ngIf="errors['title']" class="ui negative message">{{errors['title']}}</div>
+    </div>
+    <div class="field">
+      <label>Über was willst du schreiben?</label>
+      <input formControlName="text">
+      <div *ngIf="errors['text']" class="ui negative message">{{errors['text']}}</div>
+    </div>
 
 
-  <button type="submit" class="ui button" [disabled]="entryForm.invalid">Speichern</button>
-</form>
-
+    <button type="submit" class="ui button" [disabled]="entryForm.invalid">Speichern</button>
+  </form>
+</div>
