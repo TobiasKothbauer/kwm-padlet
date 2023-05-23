@@ -63,6 +63,11 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  getAllUsers(): Observable<Array<User>> {
+    return this.http.get<Array<User>>(`${this.api}/users`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
   getUserById(id:number) : Observable<User> {
     return this.http.get<User>(`${this.api}/users/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
@@ -106,6 +111,14 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  setUserRights(padletId: number, userId: number, right: string) {
+
+    const body = { right: right };
+
+    return this.http.post(`${this.api}/padlets/${padletId}/users/${userId}/rights`, body)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
   /**
    * PUT
    */
@@ -125,6 +138,8 @@ export class PadletService {
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }
+
+
 
 
 }

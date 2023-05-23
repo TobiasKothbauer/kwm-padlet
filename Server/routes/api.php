@@ -31,13 +31,15 @@ Route::get("padlets/{id}/entries",[EntryController::class, 'getEntries']);
 Route::get("entries/{id}/comments",[EntryController::class, 'getComments']);
 Route::get("entries/{id}/ratings",[EntryController::class, 'getRatings']);
 Route::get("users/{id}",[UserController::class, 'getUser']);
-Route::get("rights/{id}",[RightController::class, 'setRight']);
+Route::get("users",[UserController::class, 'getAllUsers']);
 
 Route::group(['middleware'=>['api', 'auth.jwt']], function (){
     Route::post('auth/logout', [AuthController::class,'logout']);
     Route::post("entries/{id}/comments",[EntryController::class, 'saveComment']);
     Route::post("entries/{id}/ratings",[EntryController::class, 'saveRating']);
+
 });
+Route::post("padlets/{padletId}/users/{userId}/rights", [RightController::class, 'setUserRights']);
 
 Route::post('padlets', [PadletController::class,'save']);
 Route::post('padlets/{id}/entries', [EntryController::class,'saveEntry']);

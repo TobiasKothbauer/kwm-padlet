@@ -14,10 +14,13 @@ import {User} from "../shared/user";
   styles: [
   ]
 })
-export class PadletDetailsComponent implements OnInit{
 
+export class PadletDetailsComponent implements OnInit{
   padlet : Padlet = PadletFactory.empty();
   entries : Entry[] | undefined;
+  users: User[] = [];
+  selectedUser: number = 0;
+  selectedRights: string = "";
 
   constructor(
     private ps:PadletService,
@@ -43,6 +46,18 @@ export class PadletDetailsComponent implements OnInit{
       (ent:Entry[]) => this.entries=ent
     );
 
+    this.ps.getAllUsers().subscribe(
+      (users:User[]) => this.users=users
+    );
+
+  }
+
+  updateUserRights(padletId: number, userId: number, right: string) {
+    this.ps.setUserRights(this.padlet.id, userId, right).subscribe(
+      (res:any) => {
+        this.router.navigate(['../padlets/', padletId], {relativeTo: this.route});
+        this.toastr.success("Rechte des Padlets wurde aktualisiert", "Rechtevergabe war erfolgreich!");
+      })
   }
 
   removePadlet(){
@@ -74,5 +89,7 @@ export class PadletDetailsComponent implements OnInit{
     }
     return starIcon;
   }
+
+
 
 }

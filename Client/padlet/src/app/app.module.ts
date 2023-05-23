@@ -13,7 +13,7 @@ import { EntryComponent } from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { PadletFormComponent } from './padlet-form/padlet-form.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { EntryFormComponent } from './entry-form/entry-form.component';
 import { CommmentFormComponent } from './commment-form/commment-form.component';
 import { Location } from '@angular/common';
@@ -48,7 +48,8 @@ registerLocaleData(localeDe);
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     PadletService,
