@@ -18,7 +18,9 @@ import {Rating} from "../shared/rating";
 export class RatingFormComponent implements OnInit{
   rating = RatingFactory.empty();
   ratingForm : FormGroup;
-  errors: {[key:string]:string} = {}
+  errors: {[key:string]:string} = {};
+  padletId: number = 0;
+
 
   constructor (
     private fb: FormBuilder,
@@ -35,6 +37,9 @@ export class RatingFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    const params = this.route.snapshot.params;
+    this.padletId = params['padletId'];
+    console.log(this.padletId);
     this.ratingForm.statusChanges.subscribe(()=>{
       this.updateErrorMessages();
     })

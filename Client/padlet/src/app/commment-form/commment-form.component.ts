@@ -17,7 +17,8 @@ import {EntryFactory} from "../shared/entry-factory";
 export class CommmentFormComponent implements OnInit{
   comment = CommentFactory.empty();
   commentForm : FormGroup;
-  errors: {[key:string]:string} = {}
+  errors: {[key:string]:string} = {};
+  padletId:number = 0;
 
   constructor (
     private fb: FormBuilder,
@@ -34,6 +35,8 @@ export class CommmentFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    const params = this.route.snapshot.params;
+    this.padletId = params['padletId'];
     this.commentForm.statusChanges.subscribe(()=>{
       this.updateErrorMessages();
     })

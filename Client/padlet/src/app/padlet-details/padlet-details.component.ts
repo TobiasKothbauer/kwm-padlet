@@ -6,6 +6,7 @@ import {PadletFactory} from "../shared/padlet-factory";
 import {ToastrService} from "ngx-toastr";
 import { Location } from '@angular/common';
 import {AuthenticationService} from "../shared/authentication.service";
+import {User} from "../shared/user";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -16,7 +17,7 @@ import {AuthenticationService} from "../shared/authentication.service";
 export class PadletDetailsComponent implements OnInit{
 
   padlet : Padlet = PadletFactory.empty();
-  entries : Entry[] | undefined
+  entries : Entry[] | undefined;
 
   constructor(
     private ps:PadletService,
@@ -41,6 +42,7 @@ export class PadletDetailsComponent implements OnInit{
     this.ps.getAllEntries(params['id']).subscribe(
       (ent:Entry[]) => this.entries=ent
     );
+
   }
 
   removePadlet(){
@@ -63,6 +65,14 @@ export class PadletDetailsComponent implements OnInit{
         }
       )
     }
+  }
+
+  getStars(numStars: number): string {
+    let starIcon = '';
+    for (let i = 0; i < numStars; i++) {
+      starIcon += '<i class="star icon yellow"></i>';
+    }
+    return starIcon;
   }
 
 }

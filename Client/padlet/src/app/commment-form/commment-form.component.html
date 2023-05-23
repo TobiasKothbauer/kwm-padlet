@@ -1,5 +1,5 @@
 <div class="ui container">
-  <h1>Kommentar erstellen</h1>
+  <div class="ui large header">Dein Kommentar zum Padlet mit der ID {{padletId}}</div>
   <form class="ui large form" [formGroup]="commentForm"
         (ngSubmit)="submitForm()">
     <input type="hidden" formControlName="id">

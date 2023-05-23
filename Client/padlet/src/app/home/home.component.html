@@ -1,6 +1,26 @@
-<div class="ui container">
-  <h1>Home</h1>
-  <a routerLink="../padlets" class="ui red button">
-    Padletliste ansehen
+<div class="ui basic segment"></div>
+<div class="ui basic segment"></div>
+<div class="ui centered card">
+  <div class="content">
+    <div class="header center aligned content">Willkomen zurück</div>
+  </div>
+
+  <div class="ui items" *ngIf="authService.isLoggedIn()">
+    <div class="item">
+      <a class="ui tiny image">
+        <img [src]="user?.profile_picture">
+      </a>
+      <div class="middle aligned content">
+        <div class="header">
+          {{user?.username}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a routerLink="../padlets" class="ui bottom attached button">
+    Zur Padletliste
+    <i class="arrow right icon"></i>
   </a>
 </div>
+

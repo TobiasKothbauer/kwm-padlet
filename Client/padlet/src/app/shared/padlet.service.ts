@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, retry, throwError} from "rxjs";
 import {PadletFormErrorMessages} from "../padlet-form/padlet-form-error-messages";
 import {Rating} from "./rating";
+import {User} from "./user";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,9 @@ export class PadletService {
 
   constructor(private http:HttpClient) {}
 
+  /**
+   * GET
+   */
   getAll(): Observable<Array<Padlet>> {
     return this.http.get<Array<Padlet>>(`${this.api}/padlets`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
@@ -54,6 +58,20 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  getEntryById(id:number) : Observable<Entry>  {
+    return this.http.get<Entry>(`${this.api}/entries/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUserById(id:number) : Observable<User> {
+    return this.http.get<User>(`${this.api}/users/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+
+  /**
+   * DELETE
+   */
   removePadlet(id:number) : Observable<any>  {
     return this.http.delete(`${this.api}/padlets/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
@@ -64,6 +82,10 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+
+  /**
+   * POST
+   */
   createPadlet(padlet:Padlet) : Observable<any>  {
     return this.http.post(`${this.api}/padlets`, padlet)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
@@ -84,12 +106,22 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  /**
+   * PUT
+   */
   updatePadlet(padlet:Padlet) : Observable<any>  {
     return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  updateEntry(entry:Entry) : Observable<any>  {
+    return this.http.put(`${this.api}/entries/${entry.id}`, entry)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
 
+  /**
+   * ERROR
+   */
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }

@@ -36,10 +36,12 @@
               Kommentieren
             </a>
 
-
             <div class="content" *ngFor="let rating of entry.ratings">
-              <div class="center aligned description" >
-                <p>{{ rating.rating }} - from user</p>
+              <div class="center aligned description">
+                <p>
+                  <span [innerHTML]="getStars(rating.rating)"></span>
+                  user
+                </p>
               </div>
             </div>
             <a *ngIf="authService.isLoggedIn()" class="ui bottom attached button"
@@ -47,16 +49,22 @@
               <i class="add icon"></i> Bewerten
             </a>
 
+            <div class="extra content">
+              <div class="ui two buttons">
+                <div class="ui basic green button" [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id]">Eintrag bearbeiten</div>
+                <div class="ui basic red button" (click)="removeEntry(entry.id)">Eintrag löschen</div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-
-
-        <div class="ui divider"></div>
+        <div *ngIf="entries" class="ui divider"></div>
 
         <a class="ui tiny labeled icon button green" [routerLink]="['../../admin/padlets', padlet.id, 'entries']">
           <i class="plus icon"></i> Eintrag hinzufügen
         </a>
+
       </div>
 
       <!--

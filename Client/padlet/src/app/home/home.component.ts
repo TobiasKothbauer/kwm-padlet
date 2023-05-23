@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Padlet} from "../shared/padlet";
+import {User} from "../shared/user";
+import {PadletService} from "../shared/padlet.service";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-home',
@@ -6,6 +10,22 @@ import { Component } from '@angular/core';
   styles: [
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  user: User | undefined;
+  userId = 0;
+
+  constructor(
+    private ps: PadletService,
+    public authService: AuthenticationService
+  ) {  }
+
+  ngOnInit() {
+    this.userId = this.authService.getCurrentUserId();
+    this.ps.getUserById(this.userId).subscribe(
+      res => this.user = res
+    );
+    console.log(this.user);
+    console.log(this.user?.profile_picture);
+  }
 
 }

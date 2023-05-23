@@ -1,18 +1,17 @@
-<h1>Gebe deine Bewertung ab!</h1>
-<form class="ui large form" [formGroup]="ratingForm"
-      (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
-  <div class="field">
-    <label>Dein Rating:</label>
-    <div class="rating-counter">
-      <button type="button" (click)="decreaseRating()">-</button>
-      <input type="number" formControlName="rating">
-      <button type="button" (click)="increaseRating()">+</button>
+<div class="ui container">
+  <div class="ui large header">Dein Rating für das Padlet mit der ID {{padletId}}</div>
+  <form class="ui large form" [formGroup]="ratingForm"
+        (ngSubmit)="submitForm()">
+    <input type="hidden" formControlName="id">
+    <div class="field">
+      <div class="rating-counter">
+        <button class="ui tiny icon button" type="button" (click)="increaseRating()"><i class="plus icon"></i></button>
+        <input type="number" formControlName="rating">
+        <button class="ui tiny icon button" type="button" (click)="decreaseRating()"><i class="minus icon"></i></button>
+      </div>
+      <div *ngIf="errors['rating']" class="ui negative message">{{errors['rating']}}</div>
     </div>
-    <div *ngIf="errors['rating']" class="ui negative message">{{errors['rating']}}</div>
-  </div>
 
-
-  <button type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
-</form>
-
+    <button type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
+  </form>
+</div>

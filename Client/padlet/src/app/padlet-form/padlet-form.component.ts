@@ -68,9 +68,11 @@ export class PadletFormComponent implements OnInit{
 
   }
 
+  /*
   addThumbnailControl(){
     this.entries.push(this.fb.group({id:0, title:null, text:null}));
   }
+   */
 
   submitForm() {
     const formValue = this.padletForm.value;

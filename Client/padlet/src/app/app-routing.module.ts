@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'admin', component: PadletFormComponent },
   { path: 'admin/:id', component: PadletFormComponent },
   { path: 'admin/padlets/:padletId/entries', component: EntryFormComponent },
+  { path: 'admin/padlets/:padletId/entries/:entryId', component: EntryFormComponent },
   { path: 'admin/padlets/:padletId/entries/:entryId/comment', component: CommmentFormComponent, canActivate:[CanCommentAndRateGuard] },
   { path: 'admin/padlets/:padletId/entries/:entryId/rating', component: RatingFormComponent, canActivate:[CanCommentAndRateGuard] },
   { path: 'login', component: LoginComponent }
