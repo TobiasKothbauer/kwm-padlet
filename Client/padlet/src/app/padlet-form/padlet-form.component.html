@@ -14,27 +14,6 @@
       <div *ngIf="errors['isPublic']" class="ui negative message">{{errors['isPublic']}}</div>
     </div>
 
-    <div class="field">
-
-      <div formArrayName="entries">
-        <div class="fields" *ngFor="let control of entries?.controls; index as i; last as l" [formGroupName]="i">
-          <input type="hidden" formControlName="id">
-          <div class="nine wide field">
-            <input formControlName="title" >
-          </div>
-          <div class="six wide field">
-            <input formControlName="text">
-          </div>
-          <!--
-          <div class="one wide field" *ngIf="l">
-            <button (click)="addThumbnailControl()" class="ui large button">+</button>
-          </div>
-          -->
-        </div>
-      </div>
-      <div class="ui negative message" *ngIf="errors['images']">{{errors['images']}}</div>
-    </div>
-
 
     <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
   </form>

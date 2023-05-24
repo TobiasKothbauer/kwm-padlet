@@ -94,8 +94,9 @@ export class PadletFormComponent implements OnInit{
       padlet.user_id = userIdString !== null ? parseInt(userIdString) : 0;
 
       if (this.authService.isLoggedOut()) {
-        padlet.isPublic = false;
+        padlet.isPublic = true;
         padlet.user_id = 3;
+        console.log(padlet);
       }
 
       this.ps.createPadlet(padlet).subscribe(res => {
