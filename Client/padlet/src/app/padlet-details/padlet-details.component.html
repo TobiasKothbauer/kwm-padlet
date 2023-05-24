@@ -9,10 +9,14 @@
       <div class="ui raised segment">
 
         <h1 class="ui header">{{ padlet.name }}</h1>
-        <a class="ui tiny labeled icon button" [routerLink]="['../../admin', padlet.id]">
+        <a class="ui tiny labeled icon button"
+           [routerLink]="['../../admin', padlet.id]"
+           *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()">
           <i class="edit icon"></i> Bearbeiten
         </a>
-        <a class="ui tiny labeled icon button" (click)="removePadlet()">
+        <a class="ui tiny labeled icon button"
+           (click)="removePadlet()"
+           *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()">
           <i class="delete icon"></i> Löschen
         </a>
 
@@ -30,7 +34,7 @@
                 <p>{{ comment.comment }} - from user</p>
               </div>
             </div>
-            <a *ngIf="authService.isLoggedIn()" class="ui bottom attached button"
+            <a *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()" class="ui bottom attached button"
                [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'comment']">
               <i class="add icon"></i>
               Kommentieren
@@ -44,15 +48,22 @@
                 </p>
               </div>
             </div>
-            <a *ngIf="authService.isLoggedIn()" class="ui bottom attached button"
+            <a *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()" class="ui bottom attached button"
                [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id, 'rating']">
               <i class="add icon"></i> Bewerten
             </a>
 
             <div class="extra content">
               <div class="ui two buttons">
-                <div class="ui basic green button" [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id]">Eintrag bearbeiten</div>
-                <div class="ui basic red button" (click)="removeEntry(entry.id)">Eintrag löschen</div>
+                <div class="ui basic green button"
+                     [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id]"
+                     *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()">
+                  Eintrag bearbeiten
+                </div>
+                <div class="ui basic red button" (click)="removeEntry(entry.id)"
+                     *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()">
+                  Eintrag löschen
+                </div>
               </div>
             </div>
 
@@ -61,8 +72,11 @@
 
         <div *ngIf="entries" class="ui divider"></div>
 
-        <a class="ui tiny labeled icon button green" [routerLink]="['../../admin/padlets', padlet.id, 'entries']">
-          <i class="plus icon"></i> Eintrag hinzufügen
+        <a class="ui tiny labeled icon button green"
+           [routerLink]="['../../admin/padlets', padlet.id, 'entries']"
+           *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()">
+          <i class="plus icon"></i>
+          Eintrag hinzufügen
         </a>
 
       </div>

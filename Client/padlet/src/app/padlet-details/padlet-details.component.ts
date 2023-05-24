@@ -21,6 +21,7 @@ export class PadletDetailsComponent implements OnInit{
   users: User[] = [];
   selectedUser: number = 0;
   selectedRights: string = "";
+  currentUserRight: string | null = "";
 
   constructor(
     private ps:PadletService,
@@ -50,12 +51,18 @@ export class PadletDetailsComponent implements OnInit{
       (users:User[]) => this.users=users
     );
 
+    const currentUserId = this.authService.getCurrentUserId();
+
+    // Check the user's rights for the clicked padlet
+    this.ps.getPadletUserRights(params['id'], currentUserId).subscribe(
+      (rights: string | null) => this.currentUserRight = rights
+    );
   }
 
   updateUserRights(padletId: number, userId: number, right: string) {
     this.ps.setUserRights(this.padlet.id, userId, right).subscribe(
       (res:any) => {
-        this.router.navigate(['../padlets/', padletId], {relativeTo: this.route});
+        this.router.navigate(['../../padlets/', padletId], {relativeTo: this.route});
         this.toastr.success("Rechte des Padlets wurde aktualisiert", "Rechtevergabe war erfolgreich!");
       })
   }

@@ -55,6 +55,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Padlet::class);
     }
 
+    public function padlets(): BelongsToMany
+    {
+        return $this->belongsToMany(Padlet::class, 'padlet_user')->withPivot('right');
+    }
 
     public function users(): BelongsToMany {
         return $this->belongsToMany(Padlet::class)->withPivot(['right']);

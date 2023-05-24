@@ -35,9 +35,9 @@
           <span class="right floated">
             {{ padlet.creation_date | date: 'longDate' }}
           </span>
-            <span>
+          <span>
               <img class="ui avatar image" [src]="padlet.user.profile_picture">
-              {{padlet.user.username}}
+            {{padlet.user.username}}
             </span>
         </div>
       </div>
@@ -45,16 +45,20 @@
   </div>
 
 
-  <span *ngIf="authService.isLoggedIn()" >
+  <span *ngIf="authService.isLoggedIn()">
 
     <div class="ui divider"></div>
 
-    <h1 class="ui header margin-top">Private Padlets</h1>
+
+
+   <h1 class="ui header margin-top">Private Padlets</h1>
     <div class="ui cards">
       <ng-container *ngFor="let padlet of padlets">
         <div *ngIf="!padlet.isPublic" class="card">
           <div class="content">
-            <a class="header bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+            <a class="header"
+               (click)="onPadletClick($event, padlet)">{{ padlet?.name }}
+            </a>
           </div>
           <div class="extra content">
             <span class="right floated">
@@ -62,7 +66,7 @@
             </span>
             <span>
               <img class="ui avatar image" [src]="padlet.user.profile_picture">
-              {{padlet.user.username}}
+              {{ padlet.user.username }}
             </span>
           </div>
         </div>
@@ -92,7 +96,6 @@
     </div>
 
   </span>
-
 
 
 </div>

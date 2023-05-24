@@ -53,9 +53,11 @@ class PadletsTableSeeder extends Seeder
         $padlet2->entries()->saveMany([$entry3]);
 
         // add all users
+        /*
         $users = User::all()->pluck("id");
         $padlet1->users()->attach($users, ['right' => 'lesen']);
         $padlet2->users()->attach($users, ['right' => 'lesen']);
+*/
 
         /* einzeln festlegen
         $padlet1->users()->attach($user, ['right' => 'lesen']);

@@ -24,8 +24,6 @@ export class HomeComponent implements OnInit{
     this.ps.getUserById(this.userId).subscribe(
       res => this.user = res
     );
-    console.log(this.user);
-    console.log(this.user?.profile_picture);
   }
 
 }

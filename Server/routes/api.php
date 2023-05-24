@@ -32,6 +32,7 @@ Route::get("entries/{id}/comments",[EntryController::class, 'getComments']);
 Route::get("entries/{id}/ratings",[EntryController::class, 'getRatings']);
 Route::get("users/{id}",[UserController::class, 'getUser']);
 Route::get("users",[UserController::class, 'getAllUsers']);
+Route::get('/padlets/{padlet_id}/users/{user_id}/right', [RightController::class, 'getUserRights']);
 
 Route::group(['middleware'=>['api', 'auth.jwt']], function (){
     Route::post('auth/logout', [AuthController::class,'logout']);

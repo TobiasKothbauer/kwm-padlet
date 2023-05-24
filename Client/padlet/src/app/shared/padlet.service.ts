@@ -3,7 +3,7 @@ import {Entry, Padlet} from "./padlet";
 import {Comment} from "./comment";
 import {PadletListComponent} from "../padlet-list/padlet-list.component";
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, retry, throwError} from "rxjs";
+import {catchError, map, Observable, retry, throwError} from "rxjs";
 import {PadletFormErrorMessages} from "../padlet-form/padlet-form-error-messages";
 import {Rating} from "./rating";
 import {User} from "./user";
@@ -71,6 +71,12 @@ export class PadletService {
   getUserById(id:number) : Observable<User> {
     return this.http.get<User>(`${this.api}/users/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+
+  getPadletUserRights(padletId: number, userId: number): Observable<string | null> {
+    return this.http.get<{ right: string }>(`${this.api}/padlets/${padletId}/users/${userId}/right`)
+      .pipe(map(response => response.right || null));
   }
 
 
