@@ -46,9 +46,6 @@ export class CommmentFormComponent implements OnInit{
     const formValue = this.commentForm.value;
     const comment:Comment = CommentFactory.fromObject(formValue);
 
-    console.log(this.route.snapshot.params);
-    console.log(comment);
-    console.log(formValue);
     //padlet.user_id = 1;
     const entryId = this.route.snapshot.params["entryId"];
     const padletId = this.route.snapshot.params["padletId"];

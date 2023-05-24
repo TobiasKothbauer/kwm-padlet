@@ -39,7 +39,7 @@ class PadletsTableSeeder extends Seeder
         // add entries to padlet
         $entry1 = new Entry();
         $entry1->title = "Schnitzel";
-        $entry1->text = "Dieses Gericht wird klassischerweise so und so zubereitet. Echt super zum nachmachen!";
+        $entry1->text = "Dieses Gericht wird klassischerweise so und so zubereitet.";
 
         $entry2 = new Entry();
         $entry2->title = "Vorschläge vegane Gerichte?";
@@ -76,9 +76,10 @@ class PadletsTableSeeder extends Seeder
         $comment1->comment = "Mhh lecker!";
 
         $comment2 = new Comment();
-        $comment2->comment = "Igitt ...";
+        $comment2->comment = "Tofu eignet sich super";
 
-        $entry1->comments()->saveMany([$comment1, $comment2]);
+        $entry1->comments()->saveMany([$comment1]);
+        $entry2->comments()->saveMany([$comment2]);
 
 
         // add ratings to entry

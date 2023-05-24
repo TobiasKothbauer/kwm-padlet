@@ -31,7 +31,7 @@
 
             <div class="content" *ngFor="let comment of entry.comments">
               <div class="center aligned description" >
-                <p>{{ comment.comment }} - from user</p>
+                <p>{{ comment.comment }}</p>
               </div>
             </div>
             <a *ngIf="authService.isLoggedIn() && this.currentUserRight=='editieren' || padlet.user.id == this.authService.getCurrentUserId()" class="ui bottom attached button"
@@ -44,7 +44,6 @@
               <div class="center aligned description">
                 <p>
                   <span [innerHTML]="getStars(rating.rating)"></span>
-                  user
                 </p>
               </div>
             </div>
@@ -104,24 +103,29 @@
     </div>
   </div>
 
+  <div class="ui basic segment"></div>
+
 
   <form *ngIf=" authService.isLoggedIn() && padlet.user_id == authService.getCurrentUserId()"
         (ngSubmit)="updateUserRights(this.padlet.id, this.selectedUser, this.selectedRights)">
     <div>
-      <label for="user">Benutzer:</label>
+      <h1 class="ui header medium">Einen User Rechte für diese Padlet zuweisen:</h1>
+      <label for="user">Username:</label>
       <select id="user" name="user" [(ngModel)]="selectedUser">
         <option *ngFor="let user of users" [value]="user.id">{{ user.username }}</option>
       </select>
     </div>
     <div>
-      <label for="rights">Rechte:</label>
+      <label for="rights">Recht:</label>
       <select id="rights" name="rights" [(ngModel)]="selectedRights">
         <option value="editieren">Editieren</option>
         <option value="lesen">Lesen</option>
-        <!-- Weitere Optionen -->
       </select>
     </div>
-    <button type="submit">Rechte aktualisieren</button>
+
+    <button class="ui tiny labeled icon button padded" type="submit">
+      <i class="sync icon"></i>
+      Rechte aktualisieren</button>
   </form>
 
 
